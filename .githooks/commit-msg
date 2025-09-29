@@ -1,0 +1,16 @@
+#!/bin/sh
+commit_msg_file=$1
+commit_msg=$(cat "$commit_msg_file")
+
+pattern="^(feat|fix|docs|add|style|refactor|perf|test|chore|ci|build|revert)(\([a-z0-9_-]+\))?: .+"
+
+if ! echo "$commit_msg" | grep -Eq "$pattern"; then
+  echo "❌ Commit message tidak sesuai Conventional Commit!"
+  echo "Contoh yang benar:"
+  echo "  feat(auth): add login with Google"
+  echo "  fix(api): handle null pointer error"
+  exit 1
+fi
+
+echo "✅ Commit message sesuai aturan Conventional Commit"
+exit 0
